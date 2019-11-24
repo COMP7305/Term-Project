@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -37,13 +38,13 @@ public class MsgProducer {
             /* Add each message to a record. A ProducerRecord object
              identifies the topic or specific partition to publish
              a message to. */
-            ProducerRecord<String, String> rec = new ProducerRecord<>(topic,  line);
+            ProducerRecord<String, String> rec = new ProducerRecord<String, String>(topic,  line);
 
             // Send the record to the producer client library.
-            producer.send(rec);
+            producer.send(rec, null);
             System.out.println("Sent message: " + line);
             line = reader.readLine();
-             Thread.sleep(600l);
+             Thread.sleep(600L);
 
         }
 
@@ -57,14 +58,14 @@ public class MsgProducer {
     /* Set the value for a configuration parameter.
      This configuration parameter specifies which class
      to use to serialize the value of each message.*/
-    public static void configureProducer() {
+    private static void configureProducer() {
         Properties props = new Properties();
         props.put("key.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
 
-        producer = new KafkaProducer<>(props);
+        producer = new KafkaProducer(props);
     }
 
 }

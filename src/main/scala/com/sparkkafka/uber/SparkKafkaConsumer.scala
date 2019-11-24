@@ -11,8 +11,7 @@ import org.apache.spark.sql._
 
 import org.apache.spark.streaming.{ Seconds, StreamingContext, Time }
 
-import org.apache.spark.streaming.kafka09.{ ConsumerStrategies, KafkaUtils, LocationStrategies }
-import org.apache.spark.streaming.kafka.producer._
+import org.apache.spark.streaming.kafka010.{ ConsumerStrategies, KafkaUtils, LocationStrategies }
 
 /*
 

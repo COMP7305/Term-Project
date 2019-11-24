@@ -1,36 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>mapr</groupId>
-    <artifactId>mapr-sparkml-streaming-uber</artifactId>
+    <groupId>uber</groupId>
+    <artifactId>sparkml-streaming-uber</artifactId>
     <version>1.0</version>
-    <name>mapr-sparkml-streaming-uber</name>
-    <description></description>
-    <inceptionYear>2016</inceptionYear>
-
-
-    <properties>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <encoding>UTF-8</encoding>
-
-        <scala.version>2.11.8</scala.version>
-        <scala.binary.version>2.11</scala.binary.version>
-
-        <!-- version = <spark_version>-mapr-<mapr_eco_version> -->
-        <maprspark.version>2.1.0-mapr-1703</maprspark.version>
-        <maprstreams.version>0.9.0.0-mapr-1703-streams-5.2.1</maprstreams.version>
-
-        <mapr.version>1.1.1-mapr-1602-m7-5.2.0</mapr.version>
-
-        <hbasespark.version>1.1.8-mapr-1703</hbasespark.version>
-
-    </properties>  
+    <name>sparkml-streaming-uber</name>
+    <inceptionYear>2019</inceptionYear>
 
     <repositories>
         <repository>
             <id>central</id>
-            <!-- This should be at top, it makes maven try the central repo first and then others and hence faster dep resolution -->
             <name>Maven Repository</name>
             <url>https://repo1.maven.org/maven2</url>
             <releases>
@@ -40,91 +19,54 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>mapr-releases</id>
-            <url>http://repository.mapr.com/maven/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-
     </repositories>
     <dependencies>
-
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
+            <version>2.11.12</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-server</artifactId>
-            <version>${hbasespark.version}</version>
+            <version>2.0.0-alpha4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-spark</artifactId>
-            <version>${hbasespark.version}</version>
+            <version>2.0.0-alpha4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming_${scala.binary.version}</artifactId>
-            <version>${maprspark.version}</version>
+            <artifactId>spark-streaming_2.11</artifactId>
+            <version>2.3.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-mllib_${scala.binary.version}</artifactId>
-            <version>${maprspark.version}</version>
+            <artifactId>spark-mllib_2.11</artifactId>
+            <version>2.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-hive_${scala.binary.version}</artifactId>
-            <version>${maprspark.version}</version>
+            <artifactId>spark-hive_2.11</artifactId>
+            <version>2.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-graphx_${scala.binary.version}</artifactId>
-            <version>${maprspark.version}</version>
+            <artifactId>spark-graphx_2.11</artifactId>
+            <version>2.3.1</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming-kafka-0-9_${scala.binary.version}</artifactId>
-            <version>${maprspark.version}</version>
+            <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
+            <version>2.3.1</version>
         </dependency>
-  
-
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming-kafka-producer_${scala.binary.version}</artifactId>
-            <version>${maprspark.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mapr.streams</groupId>
-            <artifactId>mapr-streams</artifactId>
-            <version>5.2.1-mapr</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mapr.db</groupId>
-            <artifactId>maprdb-spark</artifactId>
-            <version>5.2.1-mapr</version>
-        </dependency>
-        
     </dependencies>
-   
-   
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.scala-tools</groupId>						
@@ -156,10 +98,6 @@
                     </execution>
                 </executions>
             </plugin>
-    
         </plugins>
-        
-
     </build>
-
 </project>

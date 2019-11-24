@@ -19,8 +19,7 @@ import org.apache.hadoop.hbase.util.Bytes
 import org.apache.kafka.clients.consumer.ConsumerConfig
 
 import org.apache.spark.streaming.{ Seconds, StreamingContext }
-import org.apache.spark.streaming.kafka09.{ ConsumerStrategies, KafkaUtils, LocationStrategies }
-import org.apache.spark.streaming.kafka.producer._
+import org.apache.spark.streaming.kafka010.{ ConsumerStrategies, KafkaUtils, LocationStrategies }
 import org.apache.hadoop.hbase.spark.HBaseDStreamFunctions._
 /*
 see doc here

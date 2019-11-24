@@ -24,7 +24,7 @@ public class MsgConsumer {
             topic = args[0];
         }
 
-        List<String> topics = new ArrayList<>();
+        List<String> topics = new ArrayList<String>();
         topics.add(topic);
         // Subscribe to the topic.
         consumer.subscribe(topics);
@@ -60,7 +60,7 @@ public class MsgConsumer {
     }
 
     /* Set the value for configuration parameters.*/
-    public static void configureConsumer(String[] args) {
+    private static void configureConsumer(String[] args) {
         Properties props = new Properties();
         // cause consumers to start at beginning of topic on first read
         props.put("auto.offset.reset", "earliest");
@@ -70,7 +70,7 @@ public class MsgConsumer {
         props.put("value.deserializer",
                 "org.apache.kafka.common.serialization.StringDeserializer");
 
-        consumer = new KafkaConsumer<>(props);
+        consumer = new KafkaConsumer(props);
     }
 
 }

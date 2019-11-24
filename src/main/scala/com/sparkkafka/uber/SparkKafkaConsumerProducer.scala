@@ -10,9 +10,8 @@ import org.apache.spark.streaming._
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{ Seconds, StreamingContext }
-import org.apache.spark.streaming.kafka09.{ ConsumerStrategies, KafkaUtils, LocationStrategies }
+import org.apache.spark.streaming.kafka010.{ ConsumerStrategies, KafkaUtils, LocationStrategies }
 import org.apache.spark.streaming.dstream.DStream
-import org.apache.spark.streaming.kafka.producer._
 import org.apache.kafka.common.serialization.StringSerializer
 
 import org.apache.spark.sql.functions._
@@ -23,6 +22,8 @@ import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.clustering.KMeansModel
 
 import org.apache.spark.rdd.RDD
+import java.util.Properties
+import scala.collection.JavaConverters._
 
 /**
  * Consumes messages from a topic in MapR Streams using the Kafka interface,
@@ -43,7 +44,6 @@ import org.apache.spark.rdd.RDD
 
 object SparkKafkaConsumerProducer extends Serializable {
 
-  import org.apache.spark.streaming.kafka.producer._
   // schema for uber data   
   case class Uber(dt: String, lat: Double, lon: Double, base: String) extends Serializable
   case class Center(cid: Integer, clat: Double, clon: Double) extends Serializable
@@ -67,7 +67,7 @@ object SparkKafkaConsumerProducer extends Serializable {
     val Array(modelpath, topics, topicp) = args
     System.out.println("Use model " + modelpath + " Subscribe to : " + topics + " Publish to: " + topicp)
 
-    val brokers = "maprdemo:9092" // not needed for MapR Streams, needed for Kafka
+    val brokers = "demo:9092"
     val groupId = "sparkApplication"
     val batchInterval = "2"
     val pollTimeout = "10000"
@@ -78,9 +78,9 @@ object SparkKafkaConsumerProducer extends Serializable {
 
     import spark.implicits._
 
-    val producerConf = new ProducerConf(
-      bootstrapServers = brokers.split(",").toList
-    )
+    var conf = new Properties()
+    val producerConf = conf.asScala.toMap
+
     // Create direct kafka stream with brokers and topics
     val topicsSet = topics.split(",").toSet
     val kafkaParams = Map[String, String](
@@ -152,7 +152,9 @@ object SparkKafkaConsumerProducer extends Serializable {
         val tRDD: org.apache.spark.sql.Dataset[String] = res.toJSON
 
         val temp: RDD[String] = tRDD.rdd
-        temp.sendToKafka[StringSerializer](topicp, producerConf)
+
+        import RDDImprovement._
+        temp.sendToKafka(producerConf, topicp)
 
         println("sending messages")
         temp.take(2).foreach(println)
